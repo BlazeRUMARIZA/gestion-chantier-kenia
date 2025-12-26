@@ -1,4 +1,5 @@
 const db = require('../models');
+const { Op } = require('sequelize');
 
 class AffectationController {
   // CRUD Affectations
@@ -190,24 +191,33 @@ class AffectationController {
     try {
       const { chantier_id, date } = req.query;
       
-      // Trouver les ouvriers déjà affectés à ce chantier
-      const affectationsExistantes = await db.Affectation.findAll({
-        where: {
-          chantier_id,
-          date_fin: null
-        },
-        attributes: ['ouvrier_id']
-      });
+      let ouvriersIdsAffectes = [];
       
-      const ouvriersIdsAffectes = affectationsExistantes.map(a => a.ouvrier_id);
+      // Si un chantier est spécifié, trouver les ouvriers déjà affectés
+      if (chantier_id) {
+        const affectationsExistantes = await db.Affectation.findAll({
+          where: {
+            chantier_id,
+            date_fin: null
+          },
+          attributes: ['ouvrier_id']
+        });
+        
+        ouvriersIdsAffectes = affectationsExistantes.map(a => a.ouvrier_id);
+      }
       
-      // Trouver tous les ouvriers non affectés
+      // Trouver tous les ouvriers actifs (non affectés si chantier spécifié)
+      const whereClause = {
+        role: 'ouvrier',
+        actif: true
+      };
+      
+      if (ouvriersIdsAffectes.length > 0) {
+        whereClause.id = { [Op.notIn]: ouvriersIdsAffectes };
+      }
+      
       const ouvriers = await db.User.findAll({
-        where: {
-          role: 'ouvrier',
-          actif: true,
-          id: { [Op.notIn]: ouvriersIdsAffectes }
-        },
+        where: whereClause,
         attributes: ['id', 'nom', 'email', 'telephone'],
         order: [['nom', 'ASC']]
       });
