@@ -1,0 +1,345 @@
+nohup: ignoring input
+Executing (default): SELECT 1+1 AS result
+✅ Connecté à la base de données MySQL
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'users' AND TABLE_SCHEMA = 'gestion_chantiers'
+Executing (default): SHOW FULL COLUMNS FROM `users`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'users' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='gestion_chantiers' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `users` CHANGE `nom` `nom` VARCHAR(100) NOT NULL;
+Executing (default): ALTER TABLE `users` CHANGE `email` `email` VARCHAR(150) NOT NULL;
+Executing (default): ALTER TABLE `users` CHANGE `password` `password` VARCHAR(255) NOT NULL;
+Executing (default): ALTER TABLE `users` CHANGE `role` `role` ENUM('admin', 'chef', 'ouvrier') NOT NULL DEFAULT 'ouvrier';
+Executing (default): ALTER TABLE `users` CHANGE `telephone` `telephone` VARCHAR(20);
+Executing (default): ALTER TABLE `users` CHANGE `actif` `actif` TINYINT(1) DEFAULT true;
+Executing (default): ALTER TABLE `users` CHANGE `derniere_connexion` `derniere_connexion` DATETIME;
+Executing (default): ALTER TABLE `users` CHANGE `created_at` `created_at` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `users` CHANGE `updated_at` `updated_at` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `users`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chantiers' AND TABLE_SCHEMA = 'gestion_chantiers'
+Executing (default): SHOW FULL COLUMNS FROM `chantiers`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'chantiers' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='gestion_chantiers' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `chantiers` CHANGE `nom` `nom` VARCHAR(150) NOT NULL;
+Executing (default): ALTER TABLE `chantiers` CHANGE `description` `description` TEXT;
+Executing (default): ALTER TABLE `chantiers` CHANGE `adresse` `adresse` VARCHAR(255);
+Executing (default): ALTER TABLE `chantiers` CHANGE `date_debut` `date_debut` DATE NOT NULL;
+Executing (default): ALTER TABLE `chantiers` CHANGE `date_fin_prevue` `date_fin_prevue` DATE NOT NULL;
+Executing (default): ALTER TABLE `chantiers` CHANGE `date_fin_reelle` `date_fin_reelle` DATE;
+Executing (default): ALTER TABLE `chantiers` CHANGE `statut` `statut` ENUM('planifié', 'en_cours', 'suspendu', 'terminé', 'annulé') NOT NULL DEFAULT 'planifié';
+Executing (default): ALTER TABLE `chantiers` CHANGE `budget` `budget` DECIMAL(15,2) DEFAULT 0;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='chantiers' AND constraint_name = 'chantiers_ibfk_1' AND TABLE_SCHEMA = 'gestion_chantiers';
+Executing (default): ALTER TABLE `chantiers` DROP FOREIGN KEY `chantiers_ibfk_1`;
+Executing (default): ALTER TABLE `chantiers` ADD FOREIGN KEY (`chef_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+Executing (default): ALTER TABLE `chantiers` CHANGE `priorite` `priorite` ENUM('faible', 'moyenne', 'haute', 'critique') DEFAULT 'moyenne';
+Executing (default): ALTER TABLE `chantiers` CHANGE `created_at` `created_at` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `chantiers` CHANGE `updated_at` `updated_at` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `chantiers`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'affectations' AND TABLE_SCHEMA = 'gestion_chantiers'
+Executing (default): SHOW FULL COLUMNS FROM `affectations`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'affectations' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='gestion_chantiers' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='affectations' AND constraint_name = 'affectations_ibfk_9' AND TABLE_SCHEMA = 'gestion_chantiers';
+Executing (default): ALTER TABLE `affectations` DROP FOREIGN KEY `affectations_ibfk_9`;
+Executing (default): ALTER TABLE `affectations` ADD FOREIGN KEY (`chantier_id`) REFERENCES `chantiers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='affectations' AND constraint_name = 'affectations_ibfk_10' AND TABLE_SCHEMA = 'gestion_chantiers';
+Executing (default): ALTER TABLE `affectations` DROP FOREIGN KEY `affectations_ibfk_10`;
+Executing (default): ALTER TABLE `affectations` ADD FOREIGN KEY (`ouvrier_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+Executing (default): ALTER TABLE `affectations` CHANGE `date_debut` `date_debut` DATE NOT NULL;
+Executing (default): ALTER TABLE `affectations` CHANGE `date_fin` `date_fin` DATE;
+Executing (default): ALTER TABLE `affectations` CHANGE `role_sur_chantier` `role_sur_chantier` VARCHAR(100) DEFAULT 'ouvrier';
+Executing (default): ALTER TABLE `affectations` CHANGE `heures_prevues` `heures_prevues` INTEGER DEFAULT 0;
+Executing (default): ALTER TABLE `affectations` CHANGE `created_at` `created_at` DATETIME NOT NULL;
+Executing (default): ALTER TABLE `affectations` CHANGE `updated_at` `updated_at` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `affectations`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'logs' AND TABLE_SCHEMA = 'gestion_chantiers'
+Executing (default): SHOW FULL COLUMNS FROM `logs`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'logs' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='gestion_chantiers' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): ALTER TABLE `logs` CHANGE `action` `action` VARCHAR(255) NOT NULL;
+Executing (default): ALTER TABLE `logs` CHANGE `niveau` `niveau` ENUM('info', 'warning', 'error', 'critical') DEFAULT 'info';
+Executing (default): SELECT CONSTRAINT_CATALOG AS constraintCatalog, CONSTRAINT_NAME AS constraintName, CONSTRAINT_SCHEMA AS constraintSchema, CONSTRAINT_TYPE AS constraintType, TABLE_NAME AS tableName, TABLE_SCHEMA AS tableSchema from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE table_name='logs' AND constraint_name = 'logs_ibfk_1' AND TABLE_SCHEMA = 'gestion_chantiers';
+Executing (default): ALTER TABLE `logs` DROP FOREIGN KEY `logs_ibfk_1`;
+Executing (default): ALTER TABLE `logs` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+Executing (default): ALTER TABLE `logs` CHANGE `ip_address` `ip_address` VARCHAR(45);
+Executing (default): ALTER TABLE `logs` CHANGE `user_agent` `user_agent` TEXT;
+Executing (default): ALTER TABLE `logs` CHANGE `details` `details` TEXT;
+Executing (default): ALTER TABLE `logs` CHANGE `endpoint` `endpoint` VARCHAR(255);
+Executing (default): ALTER TABLE `logs` CHANGE `method` `method` VARCHAR(10);
+Executing (default): ALTER TABLE `logs` CHANGE `created_at` `created_at` DATETIME NOT NULL;
+Executing (default): SHOW INDEX FROM `logs`
+✅ Modèles synchronisés avec la base de données
+🚀 Serveur démarré sur le port 5000
+🌐 Environnement: development
+📊 API disponible sur: http://localhost:5000/api
+🔗 Health check: http://localhost:5000/api/health
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'chef.dupont@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'ouvrier.martin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(*) AS `count` FROM `users` AS `User`;
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` ORDER BY `createdAt` DESC LIMIT 0, 10;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `role`, COUNT(`id`) AS `count` FROM `users` AS `User` GROUP BY `role`;
+Executing (default): SELECT count(*) AS `count` FROM `users` AS `User`;
+Executing (default): SELECT count(*) AS `count` FROM `users` AS `User` WHERE `User`.`actif` = true;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'testapi@chantiers.com';
+Executing (default): INSERT INTO `users` (`id`,`nom`,`email`,`password`,`role`,`telephone`,`actif`,`created_at`,`updated_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(`Chantier`.`id`) AS `count` FROM `chantiers` AS `Chantier` LEFT OUTER JOIN `users` AS `chef` ON `Chantier`.`chef_id` = `chef`.`id` LEFT OUTER JOIN `affectations` AS `affectations` ON `Chantier`.`id` = `affectations`.`chantier_id` LEFT OUTER JOIN `users` AS `affectations->ouvrier` ON `affectations`.`ouvrier_id` = `affectations->ouvrier`.`id`;
+Executing (default): SELECT `Chantier`.*, `chef`.`id` AS `chef.id`, `chef`.`nom` AS `chef.nom`, `chef`.`email` AS `chef.email`, `affectations`.`id` AS `affectations.id`, `affectations`.`chantier_id` AS `affectations.chantier_id`, `affectations`.`ouvrier_id` AS `affectations.ouvrier_id`, `affectations`.`date_debut` AS `affectations.date_debut`, `affectations`.`date_fin` AS `affectations.date_fin`, `affectations`.`role_sur_chantier` AS `affectations.role_sur_chantier`, `affectations`.`heures_prevues` AS `affectations.heures_prevues`, `affectations`.`created_at` AS `affectations.createdAt`, `affectations`.`updated_at` AS `affectations.updatedAt`, `affectations->ouvrier`.`id` AS `affectations.ouvrier.id`, `affectations->ouvrier`.`nom` AS `affectations.ouvrier.nom` FROM (SELECT `Chantier`.`id`, `Chantier`.`nom`, `Chantier`.`description`, `Chantier`.`adresse`, `Chantier`.`date_debut`, `Chantier`.`date_fin_prevue`, `Chantier`.`date_fin_reelle`, `Chantier`.`statut`, `Chantier`.`budget`, `Chantier`.`chef_id`, `Chantier`.`priorite`, `Chantier`.`created_at` AS `createdAt`, `Chantier`.`updated_at` AS `updatedAt` FROM `chantiers` AS `Chantier` ORDER BY `Chantier`.`date_debut` DESC LIMIT 0, 10) AS `Chantier` LEFT OUTER JOIN `users` AS `chef` ON `Chantier`.`chef_id` = `chef`.`id` LEFT OUTER JOIN `affectations` AS `affectations` ON `Chantier`.`id` = `affectations`.`chantier_id` LEFT OUTER JOIN `users` AS `affectations->ouvrier` ON `affectations`.`ouvrier_id` = `affectations->ouvrier`.`id` ORDER BY `Chantier`.`date_debut` DESC;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `Chantier`.`id`, `Chantier`.`nom`, `Chantier`.`description`, `Chantier`.`adresse`, `Chantier`.`date_debut`, `Chantier`.`date_fin_prevue`, `Chantier`.`date_fin_reelle`, `Chantier`.`statut`, `Chantier`.`budget`, `Chantier`.`chef_id`, `Chantier`.`priorite`, `Chantier`.`created_at` AS `createdAt`, `Chantier`.`updated_at` AS `updatedAt`, `chef`.`id` AS `chef.id`, `chef`.`nom` AS `chef.nom` FROM `chantiers` AS `Chantier` LEFT OUTER JOIN `users` AS `chef` ON `Chantier`.`chef_id` = `chef`.`id` ORDER BY `Chantier`.`date_debut` ASC;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT 
+          statut,
+          COUNT(*) as count,
+          SUM(budget) as total_budget,
+          AVG(budget) as avg_budget
+        FROM chantiers
+        GROUP BY statut
+Executing (default): SELECT count(*) AS `count` FROM `chantiers` AS `Chantier`;
+Executing (default): SELECT count(*) AS `count` FROM `chantiers` AS `Chantier` WHERE `Chantier`.`statut` != 'terminé' AND `Chantier`.`date_fin_prevue` < '2025-12-26';
+Executing (default): SELECT `priorite`, COUNT(`id`) AS `count` FROM `chantiers` AS `Chantier` GROUP BY `priorite`;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 2;
+Executing (default): INSERT INTO `chantiers` (`id`,`nom`,`description`,`adresse`,`date_debut`,`date_fin_prevue`,`statut`,`budget`,`chef_id`,`priorite`,`created_at`,`updated_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(`Affectation`.`id`) AS `count` FROM `affectations` AS `Affectation` LEFT OUTER JOIN `chantiers` AS `chantier` ON `Affectation`.`chantier_id` = `chantier`.`id` LEFT OUTER JOIN `users` AS `ouvrier` ON `Affectation`.`ouvrier_id` = `ouvrier`.`id`;
+Executing (default): SELECT `Affectation`.`id`, `Affectation`.`chantier_id`, `Affectation`.`ouvrier_id`, `Affectation`.`date_debut`, `Affectation`.`date_fin`, `Affectation`.`role_sur_chantier`, `Affectation`.`heures_prevues`, `Affectation`.`created_at` AS `createdAt`, `Affectation`.`updated_at` AS `updatedAt`, `chantier`.`id` AS `chantier.id`, `chantier`.`nom` AS `chantier.nom`, `chantier`.`statut` AS `chantier.statut`, `ouvrier`.`id` AS `ouvrier.id`, `ouvrier`.`nom` AS `ouvrier.nom`, `ouvrier`.`email` AS `ouvrier.email` FROM `affectations` AS `Affectation` LEFT OUTER JOIN `chantiers` AS `chantier` ON `Affectation`.`chantier_id` = `chantier`.`id` LEFT OUTER JOIN `users` AS `ouvrier` ON `Affectation`.`ouvrier_id` = `ouvrier`.`id` ORDER BY `createdAt` DESC LIMIT 0, 10;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(`Log`.`id`) AS `count` FROM `logs` AS `Log` LEFT OUTER JOIN `users` AS `user` ON `Log`.`user_id` = `user`.`id`;
+Executing (default): SELECT `Log`.`id`, `Log`.`action`, `Log`.`niveau`, `Log`.`user_id`, `Log`.`ip_address`, `Log`.`user_agent`, `Log`.`details`, `Log`.`endpoint`, `Log`.`method`, `Log`.`created_at` AS `createdAt`, `user`.`id` AS `user.id`, `user`.`nom` AS `user.nom`, `user`.`email` AS `user.email`, `user`.`role` AS `user.role` FROM `logs` AS `Log` LEFT OUTER JOIN `users` AS `user` ON `Log`.`user_id` = `user`.`id` ORDER BY `createdAt` DESC LIMIT 0, 50;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(`Log`.`id`) AS `count` FROM `logs` AS `Log` LEFT OUTER JOIN `users` AS `user` ON `Log`.`user_id` = `user`.`id` WHERE `Log`.`action` LIKE '%Connexion%';
+Executing (default): SELECT `Log`.`id`, `Log`.`action`, `Log`.`niveau`, `Log`.`user_id`, `Log`.`ip_address`, `Log`.`user_agent`, `Log`.`details`, `Log`.`endpoint`, `Log`.`method`, `Log`.`created_at` AS `createdAt`, `user`.`id` AS `user.id`, `user`.`nom` AS `user.nom`, `user`.`email` AS `user.email`, `user`.`role` AS `user.role` FROM `logs` AS `Log` LEFT OUTER JOIN `users` AS `user` ON `Log`.`user_id` = `user`.`id` WHERE `Log`.`action` LIKE '%Connexion%' ORDER BY `createdAt` DESC LIMIT 0, 20;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+🔓 Tentative de déconnexion...
+  req.user: 1 - admin@chantiers.com
+  req.token: eyJhbGciOiJIUzI1NiIs...
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'chef.dupont@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(*) AS `count` FROM `users` AS `User`;
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` ORDER BY `createdAt` DESC LIMIT 0, 10;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(*) AS `count` FROM `users` AS `User`;
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` ORDER BY `createdAt` DESC LIMIT 0, 10;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `role`, COUNT(`id`) AS `count` FROM `users` AS `User` GROUP BY `role`;
+Executing (default): SELECT count(*) AS `count` FROM `users` AS `User`;
+Executing (default): SELECT count(*) AS `count` FROM `users` AS `User` WHERE `User`.`actif` = true;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'newtest@chantiers.com';
+Executing (default): INSERT INTO `users` (`id`,`nom`,`email`,`password`,`role`,`telephone`,`actif`,`created_at`,`updated_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = '6';
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = '6';
+Executing (default): UPDATE `users` SET `nom`=?,`telephone`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(`Chantier`.`id`) AS `count` FROM `chantiers` AS `Chantier` LEFT OUTER JOIN `users` AS `chef` ON `Chantier`.`chef_id` = `chef`.`id` LEFT OUTER JOIN `affectations` AS `affectations` ON `Chantier`.`id` = `affectations`.`chantier_id` LEFT OUTER JOIN `users` AS `affectations->ouvrier` ON `affectations`.`ouvrier_id` = `affectations->ouvrier`.`id`;
+Executing (default): SELECT `Chantier`.*, `chef`.`id` AS `chef.id`, `chef`.`nom` AS `chef.nom`, `chef`.`email` AS `chef.email`, `affectations`.`id` AS `affectations.id`, `affectations`.`chantier_id` AS `affectations.chantier_id`, `affectations`.`ouvrier_id` AS `affectations.ouvrier_id`, `affectations`.`date_debut` AS `affectations.date_debut`, `affectations`.`date_fin` AS `affectations.date_fin`, `affectations`.`role_sur_chantier` AS `affectations.role_sur_chantier`, `affectations`.`heures_prevues` AS `affectations.heures_prevues`, `affectations`.`created_at` AS `affectations.createdAt`, `affectations`.`updated_at` AS `affectations.updatedAt`, `affectations->ouvrier`.`id` AS `affectations.ouvrier.id`, `affectations->ouvrier`.`nom` AS `affectations.ouvrier.nom` FROM (SELECT `Chantier`.`id`, `Chantier`.`nom`, `Chantier`.`description`, `Chantier`.`adresse`, `Chantier`.`date_debut`, `Chantier`.`date_fin_prevue`, `Chantier`.`date_fin_reelle`, `Chantier`.`statut`, `Chantier`.`budget`, `Chantier`.`chef_id`, `Chantier`.`priorite`, `Chantier`.`created_at` AS `createdAt`, `Chantier`.`updated_at` AS `updatedAt` FROM `chantiers` AS `Chantier` ORDER BY `Chantier`.`date_debut` DESC LIMIT 0, 10) AS `Chantier` LEFT OUTER JOIN `users` AS `chef` ON `Chantier`.`chef_id` = `chef`.`id` LEFT OUTER JOIN `affectations` AS `affectations` ON `Chantier`.`id` = `affectations`.`chantier_id` LEFT OUTER JOIN `users` AS `affectations->ouvrier` ON `affectations`.`ouvrier_id` = `affectations->ouvrier`.`id` ORDER BY `Chantier`.`date_debut` DESC;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `Chantier`.`id`, `Chantier`.`nom`, `Chantier`.`description`, `Chantier`.`adresse`, `Chantier`.`date_debut`, `Chantier`.`date_fin_prevue`, `Chantier`.`date_fin_reelle`, `Chantier`.`statut`, `Chantier`.`budget`, `Chantier`.`chef_id`, `Chantier`.`priorite`, `Chantier`.`created_at` AS `createdAt`, `Chantier`.`updated_at` AS `updatedAt`, `chef`.`id` AS `chef.id`, `chef`.`nom` AS `chef.nom` FROM `chantiers` AS `Chantier` LEFT OUTER JOIN `users` AS `chef` ON `Chantier`.`chef_id` = `chef`.`id` ORDER BY `Chantier`.`date_debut` ASC;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT 
+          statut,
+          COUNT(*) as count,
+          SUM(budget) as total_budget,
+          AVG(budget) as avg_budget
+        FROM chantiers
+        GROUP BY statut
+Executing (default): SELECT count(*) AS `count` FROM `chantiers` AS `Chantier`;
+Executing (default): SELECT count(*) AS `count` FROM `chantiers` AS `Chantier` WHERE `Chantier`.`statut` != 'terminé' AND `Chantier`.`date_fin_prevue` < '2025-12-26';
+Executing (default): SELECT `priorite`, COUNT(`id`) AS `count` FROM `chantiers` AS `Chantier` GROUP BY `priorite`;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 2;
+Executing (default): INSERT INTO `chantiers` (`id`,`nom`,`description`,`adresse`,`date_debut`,`date_fin_prevue`,`statut`,`budget`,`chef_id`,`priorite`,`created_at`,`updated_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `Chantier`.`id`, `Chantier`.`nom`, `Chantier`.`description`, `Chantier`.`adresse`, `Chantier`.`date_debut`, `Chantier`.`date_fin_prevue`, `Chantier`.`date_fin_reelle`, `Chantier`.`statut`, `Chantier`.`budget`, `Chantier`.`chef_id`, `Chantier`.`priorite`, `Chantier`.`created_at` AS `createdAt`, `Chantier`.`updated_at` AS `updatedAt`, `chef`.`id` AS `chef.id`, `chef`.`nom` AS `chef.nom`, `chef`.`email` AS `chef.email`, `chef`.`role` AS `chef.role`, `chef`.`telephone` AS `chef.telephone`, `chef`.`actif` AS `chef.actif`, `chef`.`derniere_connexion` AS `chef.derniere_connexion`, `chef`.`created_at` AS `chef.createdAt`, `chef`.`updated_at` AS `chef.updatedAt`, `affectations`.`id` AS `affectations.id`, `affectations`.`chantier_id` AS `affectations.chantier_id`, `affectations`.`ouvrier_id` AS `affectations.ouvrier_id`, `affectations`.`date_debut` AS `affectations.date_debut`, `affectations`.`date_fin` AS `affectations.date_fin`, `affectations`.`role_sur_chantier` AS `affectations.role_sur_chantier`, `affectations`.`heures_prevues` AS `affectations.heures_prevues`, `affectations`.`created_at` AS `affectations.createdAt`, `affectations`.`updated_at` AS `affectations.updatedAt`, `affectations->ouvrier`.`id` AS `affectations.ouvrier.id`, `affectations->ouvrier`.`nom` AS `affectations.ouvrier.nom`, `affectations->ouvrier`.`email` AS `affectations.ouvrier.email`, `affectations->ouvrier`.`role` AS `affectations.ouvrier.role`, `affectations->ouvrier`.`telephone` AS `affectations.ouvrier.telephone`, `affectations->ouvrier`.`actif` AS `affectations.ouvrier.actif`, `affectations->ouvrier`.`derniere_connexion` AS `affectations.ouvrier.derniere_connexion`, `affectations->ouvrier`.`created_at` AS `affectations.ouvrier.createdAt`, `affectations->ouvrier`.`updated_at` AS `affectations.ouvrier.updatedAt` FROM `chantiers` AS `Chantier` LEFT OUTER JOIN `users` AS `chef` ON `Chantier`.`chef_id` = `chef`.`id` LEFT OUTER JOIN `affectations` AS `affectations` ON `Chantier`.`id` = `affectations`.`chantier_id` LEFT OUTER JOIN `users` AS `affectations->ouvrier` ON `affectations`.`ouvrier_id` = `affectations->ouvrier`.`id` WHERE `Chantier`.`id` = '5';
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `description`, `adresse`, `date_debut`, `date_fin_prevue`, `date_fin_reelle`, `statut`, `budget`, `chef_id`, `priorite`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `chantiers` AS `Chantier` WHERE `Chantier`.`id` = '5';
+Executing (default): UPDATE `chantiers` SET `statut`=?,`budget`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `Chantier`.`id`, `Chantier`.`nom`, `Chantier`.`description`, `Chantier`.`adresse`, `Chantier`.`date_debut`, `Chantier`.`date_fin_prevue`, `Chantier`.`date_fin_reelle`, `Chantier`.`statut`, `Chantier`.`budget`, `Chantier`.`chef_id`, `Chantier`.`priorite`, `Chantier`.`created_at` AS `createdAt`, `Chantier`.`updated_at` AS `updatedAt`, `chef`.`id` AS `chef.id`, `chef`.`nom` AS `chef.nom`, `chef`.`email` AS `chef.email`, `chef`.`telephone` AS `chef.telephone`, `affectations`.`id` AS `affectations.id`, `affectations`.`chantier_id` AS `affectations.chantier_id`, `affectations`.`ouvrier_id` AS `affectations.ouvrier_id`, `affectations`.`date_debut` AS `affectations.date_debut`, `affectations`.`date_fin` AS `affectations.date_fin`, `affectations`.`role_sur_chantier` AS `affectations.role_sur_chantier`, `affectations`.`heures_prevues` AS `affectations.heures_prevues`, `affectations`.`created_at` AS `affectations.createdAt`, `affectations`.`updated_at` AS `affectations.updatedAt`, `affectations->ouvrier`.`id` AS `affectations.ouvrier.id`, `affectations->ouvrier`.`nom` AS `affectations.ouvrier.nom`, `affectations->ouvrier`.`email` AS `affectations.ouvrier.email` FROM `chantiers` AS `Chantier` LEFT OUTER JOIN `users` AS `chef` ON `Chantier`.`chef_id` = `chef`.`id` LEFT OUTER JOIN `affectations` AS `affectations` ON `Chantier`.`id` = `affectations`.`chantier_id` LEFT OUTER JOIN `users` AS `affectations->ouvrier` ON `affectations`.`ouvrier_id` = `affectations->ouvrier`.`id` WHERE `Chantier`.`id` = '5';
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(`Affectation`.`id`) AS `count` FROM `affectations` AS `Affectation` LEFT OUTER JOIN `chantiers` AS `chantier` ON `Affectation`.`chantier_id` = `chantier`.`id` LEFT OUTER JOIN `users` AS `ouvrier` ON `Affectation`.`ouvrier_id` = `ouvrier`.`id`;
+Executing (default): SELECT `Affectation`.`id`, `Affectation`.`chantier_id`, `Affectation`.`ouvrier_id`, `Affectation`.`date_debut`, `Affectation`.`date_fin`, `Affectation`.`role_sur_chantier`, `Affectation`.`heures_prevues`, `Affectation`.`created_at` AS `createdAt`, `Affectation`.`updated_at` AS `updatedAt`, `chantier`.`id` AS `chantier.id`, `chantier`.`nom` AS `chantier.nom`, `chantier`.`statut` AS `chantier.statut`, `ouvrier`.`id` AS `ouvrier.id`, `ouvrier`.`nom` AS `ouvrier.nom`, `ouvrier`.`email` AS `ouvrier.email` FROM `affectations` AS `Affectation` LEFT OUTER JOIN `chantiers` AS `chantier` ON `Affectation`.`chantier_id` = `chantier`.`id` LEFT OUTER JOIN `users` AS `ouvrier` ON `Affectation`.`ouvrier_id` = `ouvrier`.`id` ORDER BY `createdAt` DESC LIMIT 0, 10;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `ouvrier_id` FROM `affectations` AS `Affectation` WHERE `Affectation`.`chantier_id` = '5' AND `Affectation`.`date_fin` IS NULL;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `description`, `adresse`, `date_debut`, `date_fin_prevue`, `date_fin_reelle`, `statut`, `budget`, `chef_id`, `priorite`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `chantiers` AS `Chantier` WHERE `Chantier`.`id` = 5;
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 4;
+Executing (default): SELECT `id`, `chantier_id`, `ouvrier_id`, `date_debut`, `date_fin`, `role_sur_chantier`, `heures_prevues`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `affectations` AS `Affectation` WHERE `Affectation`.`chantier_id` = 5 AND `Affectation`.`ouvrier_id` = 4 AND `Affectation`.`date_fin` IS NULL LIMIT 1;
+Executing (default): INSERT INTO `affectations` (`id`,`chantier_id`,`ouvrier_id`,`date_debut`,`role_sur_chantier`,`heures_prevues`,`created_at`,`updated_at`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `Affectation`.`id`, `Affectation`.`chantier_id`, `Affectation`.`ouvrier_id`, `Affectation`.`date_debut`, `Affectation`.`date_fin`, `Affectation`.`role_sur_chantier`, `Affectation`.`heures_prevues`, `Affectation`.`created_at` AS `createdAt`, `Affectation`.`updated_at` AS `updatedAt`, `chantier`.`id` AS `chantier.id`, `chantier`.`nom` AS `chantier.nom`, `chantier`.`description` AS `chantier.description`, `chantier`.`adresse` AS `chantier.adresse`, `chantier`.`date_debut` AS `chantier.date_debut`, `chantier`.`date_fin_prevue` AS `chantier.date_fin_prevue`, `chantier`.`date_fin_reelle` AS `chantier.date_fin_reelle`, `chantier`.`statut` AS `chantier.statut`, `chantier`.`budget` AS `chantier.budget`, `chantier`.`chef_id` AS `chantier.chef_id`, `chantier`.`priorite` AS `chantier.priorite`, `chantier`.`created_at` AS `chantier.createdAt`, `chantier`.`updated_at` AS `chantier.updatedAt` FROM `affectations` AS `Affectation` LEFT OUTER JOIN `chantiers` AS `chantier` ON `Affectation`.`chantier_id` = `chantier`.`id` WHERE `Affectation`.`id` = '4';
+Executing (default): UPDATE `affectations` SET `heures_prevues`=?,`role_sur_chantier`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(`Log`.`id`) AS `count` FROM `logs` AS `Log` LEFT OUTER JOIN `users` AS `user` ON `Log`.`user_id` = `user`.`id`;
+Executing (default): SELECT `Log`.`id`, `Log`.`action`, `Log`.`niveau`, `Log`.`user_id`, `Log`.`ip_address`, `Log`.`user_agent`, `Log`.`details`, `Log`.`endpoint`, `Log`.`method`, `Log`.`created_at` AS `createdAt`, `user`.`id` AS `user.id`, `user`.`nom` AS `user.nom`, `user`.`email` AS `user.email`, `user`.`role` AS `user.role` FROM `logs` AS `Log` LEFT OUTER JOIN `users` AS `user` ON `Log`.`user_id` = `user`.`id` ORDER BY `createdAt` DESC LIMIT 0, 5;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT count(`Log`.`id`) AS `count` FROM `logs` AS `Log` LEFT OUTER JOIN `users` AS `user` ON `Log`.`user_id` = `user`.`id` WHERE `Log`.`action` LIKE '%Connexion%';
+Executing (default): SELECT `Log`.`id`, `Log`.`action`, `Log`.`niveau`, `Log`.`user_id`, `Log`.`ip_address`, `Log`.`user_agent`, `Log`.`details`, `Log`.`endpoint`, `Log`.`method`, `Log`.`created_at` AS `createdAt`, `user`.`id` AS `user.id`, `user`.`nom` AS `user.nom`, `user`.`email` AS `user.email`, `user`.`role` AS `user.role` FROM `logs` AS `Log` LEFT OUTER JOIN `users` AS `user` ON `Log`.`user_id` = `user`.`id` WHERE `Log`.`action` LIKE '%Connexion%' ORDER BY `createdAt` DESC LIMIT 0, 20;
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`email` = 'admin@chantiers.com';
+Executing (default): UPDATE `users` SET `derniere_connexion`=?,`updated_at`=? WHERE `id` = ?
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `Affectation`.`id`, `Affectation`.`chantier_id`, `Affectation`.`ouvrier_id`, `Affectation`.`date_debut`, `Affectation`.`date_fin`, `Affectation`.`role_sur_chantier`, `Affectation`.`heures_prevues`, `Affectation`.`created_at` AS `createdAt`, `Affectation`.`updated_at` AS `updatedAt`, `chantier`.`id` AS `chantier.id`, `chantier`.`nom` AS `chantier.nom`, `chantier`.`description` AS `chantier.description`, `chantier`.`adresse` AS `chantier.adresse`, `chantier`.`date_debut` AS `chantier.date_debut`, `chantier`.`date_fin_prevue` AS `chantier.date_fin_prevue`, `chantier`.`date_fin_reelle` AS `chantier.date_fin_reelle`, `chantier`.`statut` AS `chantier.statut`, `chantier`.`budget` AS `chantier.budget`, `chantier`.`chef_id` AS `chantier.chef_id`, `chantier`.`priorite` AS `chantier.priorite`, `chantier`.`created_at` AS `chantier.createdAt`, `chantier`.`updated_at` AS `chantier.updatedAt` FROM `affectations` AS `Affectation` LEFT OUTER JOIN `chantiers` AS `chantier` ON `Affectation`.`chantier_id` = `chantier`.`id` WHERE `Affectation`.`id` = '4';
+Executing (default): DELETE FROM `affectations` WHERE `id` = 4
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `description`, `adresse`, `date_debut`, `date_fin_prevue`, `date_fin_reelle`, `statut`, `budget`, `chef_id`, `priorite`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `chantiers` AS `Chantier` WHERE `Chantier`.`id` = '5';
+Executing (default): DELETE FROM `chantiers` WHERE `id` = 5
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+Executing (default): SELECT `id`, `nom`, `email`, `password`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = '6';
+Executing (default): DELETE FROM `users` WHERE `id` = 6
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `nom`, `email`, `role`, `telephone`, `actif`, `derniere_connexion`, `created_at` AS `createdAt`, `updated_at` AS `updatedAt` FROM `users` AS `User` WHERE `User`.`id` = 1;
+🔐 Authentification réussie: admin@chantiers.com (admin)
+🔓 Tentative de déconnexion...
+  req.user: 1 - admin@chantiers.com
+  req.token: eyJhbGciOiJIUzI1NiIs...
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`details`,`created_at`) VALUES (DEFAULT,?,?,?,?,?);
+Executing (default): INSERT INTO `logs` (`id`,`action`,`niveau`,`user_id`,`ip_address`,`user_agent`,`details`,`endpoint`,`method`,`created_at`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);

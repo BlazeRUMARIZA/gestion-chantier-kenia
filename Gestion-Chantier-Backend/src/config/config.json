@@ -1,0 +1,30 @@
+{
+  "development": {
+    "username": "root",
+    "password": "",
+    "database": "gestion_chantiers",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": true,
+    "define": {
+      "timestamps": true,
+      "underscored": true
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": "",
+    "database": "gestion_chantiers_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false
+  },
+  "production": {
+    "username": "root",
+    "password": "",
+    "database": "gestion_chantiers_prod",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false
+  }
+}
