@@ -58,7 +58,8 @@ const Profile = () => {
       }
 
       const response = await authService.updateProfile(user.id, dataToUpdate);
-      updateUser(response.user);
+      // Le backend renvoie { success, message, data: {...user} }
+      updateUser(response.data);
       toast.success('Profil mis à jour avec succès');
 
       // Réinitialiser les champs de mot de passe

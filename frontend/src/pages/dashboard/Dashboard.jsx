@@ -5,8 +5,9 @@ import { userService } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import { handleApiError } from '../../utils/helpers';
-import { FiTool, FiUsers, FiCheckCircle, FiClock, FiActivity } from 'react-icons/fi';
+import { FiTool, FiUsers, FiCheckCircle, FiClock, FiActivity, FiHome } from 'react-icons/fi';
 import Loading from '../../components/common/Loading';
+import PageHeader from '../../components/common/PageHeader';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import { Pie, Bar } from 'react-chartjs-2';
 
@@ -134,10 +135,11 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>Tableau de bord</h1>
-      <p className="mb-3" style={{ color: '#666' }}>
-        Bienvenue, {user?.nom} ({user?.role})
-      </p>
+      <PageHeader
+        icon={FiHome}
+        title="Tableau de bord"
+        description={`Bienvenue, ${user?.nom} (${user?.role})`}
+      />
 
       {/* Stats Cards */}
       <div className="stats-grid">

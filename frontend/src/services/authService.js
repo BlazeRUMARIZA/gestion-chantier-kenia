@@ -33,8 +33,9 @@ export const authService = {
   // Mettre à jour le profil utilisateur
   updateProfile: async (userId, userData) => {
     const response = await api.put(`/users/${userId}`, userData);
-    if (response.data.user) {
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+    // Le backend renvoie { success, message, data: {...user} }
+    if (response.data.data) {
+      localStorage.setItem('user', JSON.stringify(response.data.data));
     }
     return response.data;
   },

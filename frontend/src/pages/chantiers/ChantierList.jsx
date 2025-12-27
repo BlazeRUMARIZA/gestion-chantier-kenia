@@ -8,6 +8,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import Loading from '../../components/common/Loading';
 import EmptyState from '../../components/common/EmptyState';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
+import PageHeader from '../../components/common/PageHeader';
 
 const ChantierList = () => {
   const { hasRole } = useAuth();
@@ -83,19 +84,23 @@ const ChantierList = () => {
 
   return (
     <div>
-      <div className="flex-between mb-3">
-        <h1>Gestion des Chantiers</h1>
-        <div className="flex gap-2">
-          <Link to="/planning" className="btn btn-secondary">
-            <FiCalendar /> Planning
-          </Link>
-          {hasRole(['admin', 'chef']) && (
-            <Link to="/chantiers/new" className="btn btn-primary">
-              <FiPlus /> Nouveau Chantier
+      <PageHeader
+        icon={FiTool}
+        title="Gestion des Chantiers"
+        description="Gérez tous vos chantiers en cours et planifiés"
+        actions={
+          <>
+            <Link to="/planning" className="btn btn-secondary">
+              <FiCalendar /> Planning
             </Link>
-          )}
-        </div>
-      </div>
+            {hasRole(['admin', 'chef']) && (
+              <Link to="/chantiers/new" className="btn btn-primary">
+                <FiPlus /> Nouveau Chantier
+              </Link>
+            )}
+          </>
+        }
+      />
 
       <div className="card">
         <div className="card-body">
