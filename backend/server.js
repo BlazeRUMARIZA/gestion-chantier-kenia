@@ -9,11 +9,20 @@ db.sequelize.authenticate()
   .then(() => {
     console.log('✅ Connecté à la base de données MySQL');
     
-    // Synchroniser les modèles (créer les tables si elles n'existent pas)
-    return db.sequelize.sync({ alter: true });
+    // Synchroniser les modèles SEULEMENT en développement
+    // En production, utiliser les migrations (start.sh)
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('🔄 Mode développement: sync des modèles...');
+      return db.sequelize.sync({ alter: true });
+    } else {
+      console.log('✅ Mode production: migrations déjà exécutées');
+      return Promise.resolve();
+    }
   })
   .then(() => {
-    console.log('✅ Modèles synchronisés avec la base de données');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('✅ Modèles synchronisés avec la base de données');
+    }
     
     // Démarrer le serveur
     app.listen(PORT, () => {

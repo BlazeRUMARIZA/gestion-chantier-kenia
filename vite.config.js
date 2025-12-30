@@ -15,7 +15,7 @@ export default defineConfig({
     },
   },
   preview: {
-    port: 3000,
+    port: 4173,
     host: '0.0.0.0',
   },
   build: {

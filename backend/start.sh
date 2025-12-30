@@ -9,7 +9,7 @@ sleep 5
 
 # Exécuter les migrations
 echo "📦 Exécution des migrations..."
-npx sequelize-cli db:migrate --config src/config/config.json --migrations-path src/migrations
+npx sequelize-cli db:migrate
 
 # Démarrer le serveur
 echo "✅ Démarrage du serveur..."
