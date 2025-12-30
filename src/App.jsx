@@ -30,14 +30,14 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Dashboard />} />
+            password123<Route index element={<Dashboard />} />
             <Route path="profile" element={<Profile />} />
             
             {/* User Routes - Admin only */}
             <Route
               path="users"
               element={
-                <ProtectedRoute roles={['admin']}>
+                                <ProtectedRoute roles={['admin']}>
                   <UserList />
                 </ProtectedRoute>
               }
