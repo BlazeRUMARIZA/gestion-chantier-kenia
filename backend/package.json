@@ -15,7 +15,7 @@
     "db:reset": "npm run db:migrate:undo && npm run db:migrate && npm run db:seed",
     "test": "jest --coverage --detectOpenHandles",
     "test:watch": "jest --watch",
-    "migrate": "sequelize db:migrate"
+    "migrate": "sequelize-cli db:migrate"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

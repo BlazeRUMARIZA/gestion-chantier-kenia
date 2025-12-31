@@ -24,12 +24,12 @@ db.sequelize.authenticate()
       console.log('✅ Modèles synchronisés avec la base de données');
     }
     
-    // Démarrer le serveur
-    app.listen(PORT, () => {
+    // Démarrer le serveur sur toutes les interfaces (0.0.0.0) pour Railway
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Serveur démarré sur le port ${PORT}`);
       console.log(`🌐 Environnement: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`📊 API disponible sur: http://localhost:${PORT}/api`);
-      console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+      console.log(`📊 API disponible sur: http://0.0.0.0:${PORT}/api`);
+      console.log(`🔗 Health check: http://0.0.0.0:${PORT}/api/health`);
     });
   })
   .catch(err => {
