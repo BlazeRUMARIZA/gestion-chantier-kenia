@@ -10,10 +10,10 @@ import {
 import {
   MdConstruction,
   MdEngineering,
-  MdAssignment,
-  MdHardhat,
+  MdBusiness,
 } from 'react-icons/md';
 import { HiOutlineClipboardList } from 'react-icons/hi';
+import { GiHardHat } from 'react-icons/gi';
 
 const Sidebar = () => {
   const { user, logout, hasRole } = useAuth();
@@ -84,7 +84,7 @@ const Sidebar = () => {
           {hasRole(['admin', 'chef']) && (
             <li>
               <NavLink to="/chantiers">
-                <MdHardhat />
+                <GiHardHat />
                 <span>Chantiers</span>
               </NavLink>
             </li>
@@ -93,7 +93,7 @@ const Sidebar = () => {
           {user?.role === 'ouvrier' && (
             <li>
               <NavLink to="/mes-chantiers">
-                <MdHardhat />
+                <GiHardHat />
                 <span>Mes Chantiers</span>
               </NavLink>
             </li>
