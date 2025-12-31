@@ -76,7 +76,10 @@ module.exports = (sequelize) => {
     }
   }, {
     tableName: 'chantiers',
-    timestamps: true
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    underscored: true
   });
 
   Chantier.associate = (models) => {
