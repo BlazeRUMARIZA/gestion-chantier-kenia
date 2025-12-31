@@ -3,13 +3,17 @@ import { useAuth } from '../../contexts/AuthContext';
 import {
   FiHome,
   FiUsers,
-  FiTool,
-  FiUserCheck,
-  FiFileText,
   FiLogOut,
   FiUser,
   FiCalendar,
 } from 'react-icons/fi';
+import {
+  MdConstruction,
+  MdEngineering,
+  MdAssignment,
+  MdHardhat,
+} from 'react-icons/md';
+import { HiOutlineClipboardList } from 'react-icons/hi';
 
 const Sidebar = () => {
   const { user, logout, hasRole } = useAuth();
@@ -48,7 +52,7 @@ const Sidebar = () => {
     <aside className="sidebar">
       <div className="sidebar-header">
         <div className="sidebar-brand">
-          <FiTool className="brand-icon" />
+          <MdConstruction className="brand-icon" />
           <h2>Gestion Chantiers</h2>
         </div>
         
@@ -80,7 +84,7 @@ const Sidebar = () => {
           {hasRole(['admin', 'chef']) && (
             <li>
               <NavLink to="/chantiers">
-                <FiTool />
+                <MdHardhat />
                 <span>Chantiers</span>
               </NavLink>
             </li>
@@ -89,7 +93,7 @@ const Sidebar = () => {
           {user?.role === 'ouvrier' && (
             <li>
               <NavLink to="/mes-chantiers">
-                <FiTool />
+                <MdHardhat />
                 <span>Mes Chantiers</span>
               </NavLink>
             </li>
@@ -98,7 +102,7 @@ const Sidebar = () => {
           {hasRole(['admin', 'chef']) && (
             <li>
               <NavLink to="/affectations">
-                <FiUserCheck />
+                <MdEngineering />
                 <span>Affectations</span>
               </NavLink>
             </li>
@@ -125,7 +129,7 @@ const Sidebar = () => {
           {hasRole('admin') && (
             <li>
               <NavLink to="/logs">
-                <FiFileText />
+                <HiOutlineClipboardList />
                 <span>Logs</span>
               </NavLink>
             </li>
