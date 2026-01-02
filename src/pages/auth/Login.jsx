@@ -92,13 +92,13 @@ const Login = () => {
             </p>
             <ul className="demo-accounts">
               <li>
-                <strong>Admin:</strong> admin@chantiers.com / password123
+                <strong>Admin:</strong> don@chantiers.com / password123
               </li>
               <li>
-                <strong>Chef:</strong> chef.dupont@chantiers.com / password123
+                <strong>Chef:</strong> kenia@gmail.com / password123
               </li>
               <li>
-                <strong>Ouvrier:</strong> ouvrier.martin@chantiers.com / password123
+                <strong>Ouvrier:</strong> jordy@gmail.com / password123
               </li>
             </ul>
           </div>
