@@ -59,21 +59,8 @@ module.exports = (sequelize) => {
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
-    underscored: true,
-    hooks: {
-      beforeCreate: async (user) => {
-        if (user.password) {
-          const bcrypt = require('bcryptjs');
-          user.password = await bcrypt.hash(user.password, 10);
-        }
-      },
-      beforeUpdate: async (user) => {
-        if (user.changed('password')) {
-          const bcrypt = require('bcryptjs');
-          user.password = await bcrypt.hash(user.password, 10);
-        }
-      }
-    }
+    underscored: true
+    // Hooks removed - password hashing is handled in AuthService
   });
 
   User.associate = (models) => {
