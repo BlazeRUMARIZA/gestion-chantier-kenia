@@ -2,6 +2,6 @@
 set -e
 
 echo "🔄 Running database migrations..."
-# Use npx instead of direct path to avoid permission issues
-npx sequelize-cli db:migrate
+# Use node to execute sequelize CLI directly
+node node_modules/.bin/sequelize-cli db:migrate
 echo "✅ Migrations completed successfully!"
