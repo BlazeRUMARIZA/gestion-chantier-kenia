@@ -7,6 +7,9 @@ const routes = require('./routes');
 
 const app = express();
 
+// Trust proxy pour Render.com (requis pour express-rate-limit)
+app.set('trust proxy', 1);
+
 // Configuration de sécurité
 app.use(helmet());
 
