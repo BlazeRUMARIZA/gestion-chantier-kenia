@@ -4,9 +4,8 @@
 
 set -e  # Arrête si une commande échoue
 
-echo "🔄 Exécution des migrations..."
-npx sequelize-cli db:migrate
+# Exécuter les migrations via Node.js
+node run-migrations.js
 
-echo "✅ Migrations terminées"
 echo "🚀 Démarrage du serveur..."
 node server.js
