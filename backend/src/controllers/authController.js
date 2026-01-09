@@ -1,6 +1,58 @@
 const AuthService = require('../services/authService');
 
 class AuthController {
+  static async register(req, res) {
+    try {
+      const { nom, email, password, role, telephone } = req.body;
+      
+      // Validation
+      if (!nom || !email || !password) {
+        return res.status(400).json({
+          success: false,
+          message: 'Nom, email et mot de passe sont requis'
+        });
+      }
+      
+      // Validation de l'email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email invalide'
+        });
+      }
+      
+      // Validation du mot de passe (minimum 6 caractères)
+      if (password.length < 6) {
+        return res.status(400).json({
+          success: false,
+          message: 'Le mot de passe doit contenir au moins 6 caractères'
+        });
+      }
+      
+      const ipAddress = req.ip || req.connection.remoteAddress;
+      const userAgent = req.get('user-agent') || 'Unknown';
+      
+      const result = await AuthService.register(
+        { nom, email, password, role, telephone },
+        ipAddress,
+        userAgent
+      );
+      
+      res.status(201).json({
+        success: true,
+        message: 'Inscription réussie',
+        data: result
+      });
+    } catch (error) {
+      console.error('Erreur register:', error.message);
+      res.status(400).json({
+        success: false,
+        message: error.message || 'Erreur lors de l\'inscription'
+      });
+    }
+  }
+
   static async login(req, res) {
     try {
       const { email, password } = req.body;
