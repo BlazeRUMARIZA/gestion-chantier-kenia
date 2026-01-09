@@ -6,6 +6,9 @@ class AuthService {
   static async register(userData, ipAddress, userAgent) {
     const { nom, email, password, role, telephone } = userData;
     
+    console.log('📝 Registration attempt:', { nom, email, role, telephone });
+    console.log('🔑 Password received:', password);
+    
     // Vérifier si l'email existe déjà
     const existingUser = await db.User.findOne({ where: { email } });
     
@@ -14,7 +17,9 @@ class AuthService {
     }
     
     // Hasher le mot de passe
+    console.log('🔐 Hashing password...');
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log('✅ Password hashed:', hashedPassword.substring(0, 30) + '...');
     
     // Créer l'utilisateur
     const user = await db.User.create({
@@ -71,21 +76,31 @@ class AuthService {
 
   static async login(email, password, ipAddress, userAgent) {
     // Chercher l'utilisateur
+    console.log('🔍 Login attempt for email:', email);
     const user = await db.User.findOne({ where: { email } });
     
     if (!user) {
+      console.log('❌ User not found:', email);
       throw new Error('Email ou mot de passe incorrect');
     }
     
+    console.log('✅ User found:', { id: user.id, email: user.email, actif: user.actif });
+    console.log('🔐 Password hash from DB:', user.password.substring(0, 30) + '...');
+    console.log('🔑 Password received:', password);
+    
     // Vérifier si le compte est actif
     if (!user.actif) {
+      console.log('❌ Account inactive');
       throw new Error('Compte désactivé. Contactez l\'administrateur');
     }
     
     // Comparer le mot de passe avec bcrypt
+    console.log('🔍 Comparing passwords...');
     const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log('🔐 Password valid?', isPasswordValid);
     
     if (!isPasswordValid) {
+      console.log('❌ Password mismatch for user:', email);
       throw new Error('Email ou mot de passe incorrect');
     }
     

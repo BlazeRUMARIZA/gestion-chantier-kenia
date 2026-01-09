@@ -14,7 +14,7 @@ app.set('trust proxy', 1);
 app.use(helmet());
 
 // Configuration CORS
-const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000' || 'https://gestion-chantier-frontend.onrender.com';
 console.log('🔒 CORS configuré pour:', corsOrigin);
 
 app.use(cors({
