@@ -8,7 +8,7 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: process.env.VITE_API_URL || 'https://faithful-empathy-production.up.railway.app',
+        target: process.env.VITE_API_URL || 'http://localhost:5000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api')
       },
@@ -18,7 +18,6 @@ export default defineConfig({
     port: parseInt(process.env.PORT) || 4173,
     host: '0.0.0.0',
     strictPort: false,
-    allowedHosts: ['.railway.app', '.up.railway.app'],
   },
   build: {
     outDir: 'dist',
