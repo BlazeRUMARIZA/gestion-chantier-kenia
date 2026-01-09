@@ -31,6 +31,10 @@ class AuthService {
       actif: true
     });
     
+    // Vérifier que le mot de passe n'a pas été modifié par les hooks
+    console.log('🔍 Password in DB after save:', user.password.substring(0, 30) + '...');
+    console.log('✅ Hash match?', user.password === hashedPassword);
+    
     // Créer le token JWT
     const token = jwt.sign(
       {
