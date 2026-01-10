@@ -15,7 +15,7 @@ export const userService = {
 
   // Créer un nouvel utilisateur (admin)
   createUser: async (userData) => {
-    const response = await api.post('/users', userData);
+    const response = await api.post('/auth/register', userData);
     return response.data;
   },
 
