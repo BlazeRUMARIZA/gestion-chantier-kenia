@@ -86,22 +86,22 @@ const Login = () => {
             </button>
           </form>
 
-          {/* <div className="login-footer">
+          <div className="login-footer">
             <p className="demo-info">
               <strong>Comptes de démonstration:</strong>
             </p>
             <ul className="demo-accounts">
-              <li> */}
-                {/* <strong>Admin:</strong> don@chantiers.com / password123
+              <li> 
+                <strong>Admin:</strong> don@chantiers.com / password123
               </li>
               <li>
                 <strong>Chef:</strong> kenia@gmail.com / password123
               </li>
               <li>
                 <strong>Ouvrier:</strong> jordy@gmail.com / password123
-              </li> */}
-            {/* </ul>
-          </div> */}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
